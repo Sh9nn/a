@@ -5181,7 +5181,7 @@ local Library do
 
                 Name = Data.Name or Data.name or "Keybind",
                 Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                Default = Default = Data.Default or Data.default,
+                Default = Data.Default or Data.default,
                 Mode = Data.Mode or Data.mode or "Toggle",
                 Callback = Data.Callback or Data.callback or function() end,
                 Count = Label.Count
