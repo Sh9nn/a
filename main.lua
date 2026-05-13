@@ -3811,8 +3811,11 @@ local Library do
         end)
 
         if Data.Default then 
-            Keybind:Set({Key = Data.Default, Mode = Data.Mode})
-        end
+   		 	Keybind:Set({Key = Data.Default, Mode = Data.Mode})
+		else
+		    Keybind.Value = "[...]"
+		    Items["KeyButton"].Instance.Text = "[...]"
+		end
 
         Library.SetFlags[Keybind.Flag] = function(Value)
             Keybind:Set(Value)
@@ -4913,7 +4916,7 @@ local Library do
 
                 Name = Data.Name or Data.name or "Keybind",
                 Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                Default = Data.Default or Data.default or Enum.KeyCode.RightControl,
+                Default = Data.Default or Data.default,
                 Mode = Data.Mode or Data.mode or "Toggle",
                 Callback = Data.Callback or Data.callback or function() end,
                 Tooltip = Data.Tooltip or Data.tooltip or nil,
@@ -5178,7 +5181,7 @@ local Library do
 
                 Name = Data.Name or Data.name or "Keybind",
                 Flag = Data.Flag or Data.flag or Library:NextFlag(),
-                Default = Data.Default or Data.default or Enum.KeyCode.RightControl,
+                Default = Default = Data.Default or Data.default,
                 Mode = Data.Mode or Data.mode or "Toggle",
                 Callback = Data.Callback or Data.callback or function() end,
                 Count = Label.Count
