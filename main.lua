@@ -3454,6 +3454,61 @@ local Library do
         return Items
     end
 
+	Components.Separator = function(Data)
+        local Items = { } do 
+            Items["Separator"] = Instances:Create("Frame", {
+                Parent = Data.Parent.Instance,
+                BackgroundTransparency = 1,
+                Name = "\0",
+                BorderColor3 = FromRGB(0, 0, 0),
+                Size = UDim2New(1, 0, 0, 15),
+                BorderSizePixel = 0,
+                BackgroundColor3 = FromRGB(255, 255, 255)
+            })
+
+            Items["LineLeft"] = Instances:Create("Frame", {
+                Parent = Items["Separator"].Instance,
+                Name = "\0",
+                AnchorPoint = Vector2New(0, 0.5),
+                Position = UDim2New(0, 0, 0.5, 0),
+                BorderColor3 = FromRGB(0, 0, 0),
+                Size = UDim2New(0.5, -5, 0, 1),
+                BorderSizePixel = 0,
+                BackgroundColor3 = FromRGB(68, 68, 68)
+            }) Items["LineLeft"]:AddToTheme({BackgroundColor3 = "Border"})
+
+            Items["LineRight"] = Instances:Create("Frame", {
+                Parent = Items["Separator"].Instance,
+                Name = "\0",
+                AnchorPoint = Vector2New(1, 0.5),
+                Position = UDim2New(1, 0, 0.5, 0),
+                BorderColor3 = FromRGB(0, 0, 0),
+                Size = UDim2New(0.5, -5, 0, 1),
+                BorderSizePixel = 0,
+                BackgroundColor3 = FromRGB(68, 68, 68)
+            }) Items["LineRight"]:AddToTheme({BackgroundColor3 = "Border"})
+
+            Items["Text"] = Instances:Create("TextLabel", {
+                Parent = Items["Separator"].Instance,
+                FontFace = Library.Font,
+                TextColor3 = FromRGB(180, 180, 180),
+                BorderColor3 = FromRGB(0, 0, 0),
+                Text = Data.Text,
+                Name = "\0",
+                AnchorPoint = Vector2New(0.5, 0.5),
+                Position = UDim2New(0.5, 0, 0.5, 0),
+                Size = UDim2New(0, 0, 1, 0),
+                BackgroundTransparency = 1,
+                AutomaticSize = Enum.AutomaticSize.X,
+                BorderSizePixel = 0,
+                TextSize = 12,
+                BackgroundColor3 = FromRGB(255, 255, 255)
+            }) Items["Text"]:AddToTheme({TextColor3 = "Text"})
+        end
+
+        return Items
+    end
+
     Components.Keybind = function(Data)
         local Keybind = {
             Toggled = false,
@@ -5107,10 +5162,8 @@ local Library do
             Window = self.Window,
             Page = self.Page,
             Section = self,
-
             Name = Text or "Label",
             Alignment = Alignment or "Left",
-
             Count = 0
         }
         
@@ -5126,12 +5179,10 @@ local Library do
 
         function Label:Colorpicker(Data)
             Data = Data or { } 
-
             local Colorpicker = {
                 Window = self.Window,
                 Page = self.Page,
                 Section = self,
-
                 Name = Data.Name or Data.name or "Colorpicker",
                 Flag = Data.Flag or Data.flag or Library:NextFlag(),
                 Default = Data.Default or Data.default or Color3.fromRGB(255, 255, 255),
@@ -5139,10 +5190,8 @@ local Library do
                 Alpha = Data.Alpha or Data.alpha or false,
                 Count = Label.Count
             }
-
             Label.Count += 1
             Colorpicker.Count = Label.Count
-
             local NewColorpicker, ColorpickerItems = Components.Colorpicker({
                 Name = Colorpicker.Name,
                 Parent = Items["Label"],
@@ -5152,30 +5201,24 @@ local Library do
                 Count = Colorpicker.Count,
                 Alpha = Colorpicker.Alpha
             })
-
             function Colorpicker:Set(Value, Alpha)
                 NewColorpicker:Set(Value, Alpha)
             end
-
             function Colorpicker:Get()
                 return NewColorpicker:Get()
             end
-
             function Colorpicker:SetVisibility(Bool)
                 NewColorpicker:SetVisibility(Bool)
             end
-
             return Colorpicker
         end
 
         function Label:Keybind(Data)
             Data = Data or { }
-
             local Keybind = {
                 Window = self.Window,
                 Page = self.Page,
                 Section = self,
-
                 Name = Data.Name or Data.name or "Keybind",
                 Flag = Data.Flag or Data.flag or Library:NextFlag(),
                 Default = Data.Default or Data.default or Enum.KeyCode.RightControl,
@@ -5183,7 +5226,6 @@ local Library do
                 Callback = Data.Callback or Data.callback or function() end,
                 Count = Label.Count
             }
-
             local NewKeybind, KeybindItems = Components.Keybind({
                 Name = Keybind.Name,
                 Parent = Items["Label"],
@@ -5193,23 +5235,37 @@ local Library do
                 Callback = Keybind.Callback,
                 Count = Keybind.Count
             })
-
             function Keybind:Set(Value)
                 NewKeybind:Set(Value)
             end
-
             function Keybind:Get()
                 return NewKeybind:Get()
             end
-
             function Keybind:SetVisibility(Bool)
                 NewKeybind:SetVisibility(Bool)
             end
-
             return Keybind
         end
 
         return Label 
+    end
+
+    Library.Sections.Separator = function(self, Data)
+        Data = Data or { }
+        local Separator = {
+            Window = self.Window,
+            Page = self.Page,
+            Section = self,
+            Text = Data.Text or Data.text or "",
+        }
+        local Items = Components.Separator({
+            Text = Separator.Text,
+            Parent = Separator.Section.Items["Content"],
+        })
+        function Separator:SetVisibility(Bool)
+            Items["Separator"].Instance.Visible = Bool
+        end
+        return Separator
     end
 
     Library.Sections.Textbox = function(self, Data)
