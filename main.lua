@@ -1212,7 +1212,7 @@ local Library do
                 BackgroundTransparency = 1,
                 TextXAlignment = Enum.TextXAlignment.Left,
                 BorderSizePixel = 0,
-                AutomaticSize = Enum.AutomaticSize.X,
+                AutomaticSize = Enum.AutomaticSize.X,									
                 TextSize = 12,
                 BackgroundColor3 = FromRGB(255, 255, 255)
             })  Items["Title"]:AddToTheme({TextColor3 = "Text"})
@@ -1336,6 +1336,7 @@ local Library do
                 Position = UDim2New(0, 0, 0, 4),
                 BorderSizePixel = 0,
                 AutomaticSize = Enum.AutomaticSize.X,
+				RichText = true,									
                 TextSize = 12,
                 BackgroundColor3 = FromRGB(255, 255, 255)
             }) 
